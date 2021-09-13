@@ -1,0 +1,11 @@
+{
+  "name": "v-dom",
+  "version": "1.0.0",
+  "description": "Virtual DOM Representation",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "THUNDERX",
+  "license": "ISC"
+}

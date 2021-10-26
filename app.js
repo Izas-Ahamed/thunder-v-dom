@@ -1,28 +1,24 @@
-//importing parse function from babylon
-//NOTE: Babylon has been moved into the main Babel mono-repo as @babel/parser .
-const { parse } = require("babylon");
+/* 
+  'Using Babel and Custom Plugin in babel'
+  
+  Code files are compiled and transformed to separate files 
+  by babel into dist folder (our custom plugins are used and compiled)
+  using  packages:
+   - "@babel/core", // core babel package
+   - "@babel/cli", // for cli
 
-//importing traverse function
-const { default: traverse } = require("@babel/traverse");
+ .babelrc :
+   - this is the file for configuration where our plugins are added to customize code
 
-//importing generate function
-const { default: generate } = require("@babel/generator");
+  we are using these commands in npm scripts to use babel :
+   - "build": "babel app.js -d dist",
+   - "start": "npm run build && nodemon dist/app.js"
+
+   nodemon will start after compilation of files to dist folder by babel
+*/
 
 const code = `
 const msg = \`Develop Yourself :seedling: !\`;
 `;
 
-//parse the code and convert it into Abstract Syntax Tree(AST)
-const ast = parse(code);
-
-//traversing ast to customize the values
-traverse(ast, {
-    enter({ node }) {
-        if (node.type == "TemplateElement") {
-            node.value.raw = node.value.raw.replace(/:seedling:/g, "\u{1F331}");
-        }
-    },
-});
-
-//generating changed ast to code
-console.log(generate(ast).code);
+console.log(code);

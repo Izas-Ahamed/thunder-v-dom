@@ -1,24 +1,23 @@
-/* 
-  'Using Babel and Custom Plugin in babel'
-  
-  Code files are compiled and transformed to separate files 
-  by babel into dist folder (our custom plugins are used and compiled)
-  using  packages:
-   - "@babel/core", // core babel package
-   - "@babel/cli", // for cli
+/*
+ * Using HTML (index.html) as document source for creating HTML elements (see custom-hyperscript.js)
+ *
+ * refer : https://github.com/hyperhype/hyperscript
+ *
+ */
 
- .babelrc :
-   - this is the file for configuration where our plugins are added to customize code
+//importing our custom hyperscript function which tends to create element by passing params
+import h from "./custom-hyperscript.js";
 
-  we are using these commands in npm scripts to use babel :
-   - "build": "babel app.js -d dist",
-   - "start": "npm run build && nodemon dist/app.js"
+/*
+ * function where our element created based on parameters
+ * params - (nodename,attribute,child_nodes)
+ * refer our custom-hyperscript.js‼
+ */
+const App = () => {
+    return h("h1", null, "Develop Yourself 🌱!");
+};
 
-   nodemon will start after compilation of files to dist folder by babel
-*/
+//Open index.html in browser and see the browser console
 
-const code = `
-const msg = \`Develop Yourself :seedling: !\`;
-`;
-
-console.log(code);
+//logging our component like HTML element
+console.log("App()", App());

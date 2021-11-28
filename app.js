@@ -1,23 +1,83 @@
-/*
- * Using HTML (index.html) as document source for creating HTML elements (see custom-hyperscript.js)
- *
- * refer : https://github.com/hyperhype/hyperscript
- *
- */
-
-//importing our custom hyperscript function which tends to create element by passing params
-import h from "./custom-hyperscript.js";
+//Started making v-dom
 
 /*
- * function where our element created based on parameters
+ * importing our custom hyperscript function which tends to create element by passing params
  * params - (nodename,attribute,child_nodes)
  * refer our custom-hyperscript.js‼
  */
-const App = () => {
-    return h("h1", null, "Develop Yourself 🌱!");
+import h from "./custom-hyperscript.js";
+
+let currentApp;
+
+const App = (props) => {
+    const { list } = props;
+
+    return h(
+        "div",
+        { class: "app" },
+        h("h1", null, "Food Love"),
+        h("ul", null, ...list.map((item) => h("li", null, item)))
+    );
 };
 
-//Open index.html in browser and see the browser console
+//function to render view which has state data as parameter
+const render = (state) => {
+    //creating dom elements with passing state as props
+    const newApp = App(state);
 
-//logging our component like HTML element
-console.log("App()", App());
+    // checking and appending or replacing based on if already the element exists or not
+    if (currentApp) {
+        document.body.replaceChild(newApp, currentApp);
+    } else {
+        document.body.appendChild(newApp);
+    }
+
+    // storing the reference for future changes
+    currentApp = newApp;
+};
+
+//our state which contains list of array of values to be render in dom
+const state = {
+    list: [
+        "🍕",
+        "🍔",
+        "🍟",
+        "🌭",
+        "🍿",
+        "🧀",
+        "🌯",
+        "🌮",
+        "🥪",
+        "🍗",
+        "🍜",
+        "🥧",
+        "🍦",
+        "🍨",
+        "🍰",
+        "🥣",
+    ],
+};
+
+//passing state and rendering the dom
+render(state);
+
+//setting interval to every 1 second to add random item from the list to add itself and
+// calling render function to render on  thedom
+setInterval(() => {
+    state.list = [
+        ...state.list,
+        state.list[Math.floor(Math.random() * state.list.length)],
+    ];
+    render(state);
+}, 1000);
+
+//open index.html to view dom changes
+
+/*
+ * NOTE:
+ * To see the rendering changes
+ * open developer tools
+ * go to sources -> press esc to toggle console drawer -> press three dots on console drawer
+ * -> click rendering -> check paint flashing
+ * this one shows where the dom elements rendering
+ */

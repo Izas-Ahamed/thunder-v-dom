@@ -1,11 +1,18 @@
-//Started making v-dom
+//Same with More Control with different layers
 
 /*
- * importing our custom hyperscript function which tends to create element by passing params
- * params - (nodename,attribute,child_nodes)
+ * importing our custom hyperscript function which tends to create object structure of dom like AST by passing params
+ * @params - (nodename,attribute,child_nodes)
  * refer our custom-hyperscript.js‼
  */
 import h from "./custom-hyperscript.js";
+
+/*
+ * importing our custom v-dom function which tends to create element by passing params as node structure which is created by our custom-hyperscript.js
+ * @params - (vnode) structure of dom in json format
+ * refer our custom-v-dom.js‼
+ */
+import renderNode from "./custom-v-dom.js";
 
 let currentApp;
 
@@ -22,10 +29,10 @@ const App = (props) => {
 
 //function to render view which has state data as parameter
 const render = (state) => {
-    //creating dom elements with passing state as props
-    const newApp = App(state);
+    //creating dom elements with passing state as props in App function(like component which uses custom-hyperscript and returns dom structure of objects) into renderNode function
+    const newApp = renderNode(App(state));
 
-    // checking and appending or replacing based on if already the element exists or not
+    // checking and appending or replacing element based on if already the element exists or not
     if (currentApp) {
         document.body.replaceChild(newApp, currentApp);
     } else {

@@ -1,4 +1,4 @@
-//Rendering Component in Dom
+//Adding Custom Diff Algorithm
 
 /*
  * importing our custom hyperscript function which tends to create object structure of dom like AST by passing params

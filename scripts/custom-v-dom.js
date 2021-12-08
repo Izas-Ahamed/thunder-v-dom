@@ -30,14 +30,27 @@ const renderNode = (vNode) => {
 
 const renderComponent = (component, parentNode) => {
     const oldBase = component.base;
-
-    component.base = renderNode(
-        component.render(component.props, component.state)
-    );
+    const rendered = component.render(component.props, component.state);
     if (parentNode) {
+        component.base = renderNode(
+            component.render(component.props, component.state)
+        );
         parentNode.appendChild(component.base);
     } else {
-        oldBase.parentNode.replaceChild(component.base, oldBase);
+        component.base = diff(component.base, rendered);
+    }
+};
+
+const diff = (dom, vNode) => {
+    const hasNewChilds = dom.childNodes.length !== vNode.children.length;
+
+    if (hasNewChilds) {
+        dom.appendChild(renderNode(vNode.children[vNode.children.length - 1]));
+        return dom;
+    } else {
+        const newDom = renderNode(vNode);
+        dom.parentNode.replaceChild(newDom, dom);
+        return dom;
     }
 };
 
